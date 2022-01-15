@@ -4,31 +4,31 @@ stages:
     cmd: python src/data/load_data.py --config=params.yaml
     deps:
     - path: data/external/train.csv
-      md5: 8929517566f004183dff480fdd48afe0
-      size: 391872
+      md5: 7044aa2806df73f0801fc7c79be5510a
+      size: 58027
     - path: src/data/load_data.py
       md5: 1de1b5780f0f897223d87024bae9c1fa
-      size: 1435
+      size: 1392
     outs:
     - path: data/raw/train.csv
-      md5: 9b61c38a459d36244dbf8e6940236371
-      size: 120397
+      md5: 0b1ed2945a01ef588a9a241fe0d4e2c9
+      size: 49762
   split_data:
     cmd: python src/data/split_data.py --config=params.yaml
     deps:
     - path: data/raw/train.csv
-      md5: 9b61c38a459d36244dbf8e6940236371
-      size: 120397
+      md5: 0b1ed2945a01ef588a9a241fe0d4e2c9
+      size: 49762
     - path: src/data/split_data.py
       md5: c143a95ea697d55e3718f4fe9bdc4dfb
-      size: 1383
+      size: 1354
     outs:
     - path: data/processed/zomato_test.csv
-      md5: c3a4965f71511e72d4af9ac650f47505
-      size: 24209
+      md5: ca5dbf643ecc2f09257e1ea4502967ac
+      size: 9898
     - path: data/processed/zomato_train.csv
-      md5: 8358e3ab11f8301c58d3b0e5aa99a6fd
-      size: 96317
+      md5: ab9be66ea96a50e99900484df0c9b49e
+      size: 39916
   log_production_model:
     cmd: python src/models/production_model_selection.py --config=params.yaml
     deps:
