@@ -1,0 +1,33 @@
+external_data_config:
+  external_data_csv: data/external/zomato_final_data.csv
+
+raw_data_config:
+  raw_data_csv: data/raw/zomato_final_data.csv
+  model_var: ['City', 'Location', 'Cuisine', 'Ratings', 'No. of Reviews','Price']
+  train_test_split_ratio: 0.2
+  target: Ratings
+  random_state: 48
+  new_train_data_csv: data/raw/zomato_new.csv
+
+processed_data_config:
+  train_data_csv: data/processed/zomato_train.csv
+  test_data_csv:  data/processed/zomato_test.csv
+
+mlflow_config:
+  artifacts_dir: artifacts
+  experiment_name: model_iteration1
+  run_name: random_forest
+  registered_model_name: random_forest_regressor
+  remote_server_uri: http://localhost:5000
+
+random_forest:
+  max_depth: 25
+  n_estimators: 300
+
+model_dir: models/model.joblib
+
+model_webapp_dir: webapp/model_webapp_dir/model.joblib
+
+model_monitor:
+  target_col_name: target
+  monitor_dashboard_html: reports/data_and_target_drift_dashboard.html
