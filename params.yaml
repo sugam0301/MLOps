@@ -17,8 +17,8 @@ mlflow_config:
   artifacts_dir: artifacts
   experiment_name: model_iteration1
   run_name: random_forest
-  registered_model_name: random_forest_regressor
-  remote_server_uri: http://localhost:5000
+  registered_model_name: random_forest
+  remote_server_uri: http://localhost:1234
 
 random_forest:
   max_depth: 25
