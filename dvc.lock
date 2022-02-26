@@ -1,0 +1,61 @@
+schema: '2.0'
+stages:
+  split_data:
+    cmd: python src/data/split_data.py --config=params.yaml
+    deps:
+    - path: data/raw/train.csv
+      md5: 0b1ed2945a01ef588a9a241fe0d4e2c9
+      size: 49762
+    - path: src/data/split_data.py
+      md5: fd302117ffa99c1ee0e9610433dd4043
+      size: 1404
+    outs:
+    - path: data/processed/zomato_test.csv
+      md5: ca5dbf643ecc2f09257e1ea4502967ac
+      size: 9898
+    - path: data/processed/zomato_train.csv
+      md5: ab9be66ea96a50e99900484df0c9b49e
+      size: 39916
+  model_train:
+    cmd: python src/models/train_model.py --config=params.yaml
+    deps:
+    - path: data/processed/zomato_test.csv
+      md5: ca5dbf643ecc2f09257e1ea4502967ac
+      size: 9898
+    - path: data/processed/zomato_train.csv
+      md5: ab9be66ea96a50e99900484df0c9b49e
+      size: 39916
+    - path: src/models/train_model.py
+      md5: 7df16cd21142df925f65c048dfc4bfd7
+      size: 3228
+    params:
+      params.yaml:
+        random_forest.max_depth: None
+        random_forest.n_estimators: 22
+  raw_dataset_creation:
+    cmd: python src/data/load_data.py --config=params.yaml
+    deps:
+    - path: data/external/train.csv
+      md5: 7044aa2806df73f0801fc7c79be5510a
+      size: 58027
+    - path: src/data/load_data.py
+      md5: d1fd7a999a7835b63429cbb2542b00f9
+      size: 1469
+    outs:
+    - path: data/raw/train.csv
+      md5: 0b1ed2945a01ef588a9a241fe0d4e2c9
+      size: 49762
+  log_production_model:
+    cmd: python src/models/production_model_selection.py --config=params.yaml
+    deps:
+    - path: src/models/production_model_selection.py
+      md5: 3162f4c3009dfbcb3e814a40b8b75121
+      size: 1738
+    params:
+      params.yaml:
+        random_forest.max_depth: None
+        random_forest.n_estimators: 22
+    outs:
+    - path: models/model.joblib
+      md5: 922adb93ecd0d9c0314126eaf6ce345a
+      size: 10298962
